@@ -28,6 +28,7 @@ router.put("/:id", async (req, res) => {
   )
     .then(() => {
       res.status(200).json(`Question Answered`);
+      console.log(`Question Answered = ${req.body.answer}`);
     })
     .catch(() => {
       res.status(400).json({
@@ -35,17 +36,37 @@ router.put("/:id", async (req, res) => {
       });
     });
 });
+router.get("/", async (req, res) => {
+  const arr = await Question.find({})
+    .select({ answers: 0 })
+    .then((data) => res.json(data));
+});
 router.get("/:answer/:id", async (req, res) => {
   const arr = await Question.findOne({ _id: req.params.id });
   //   const uniqueAnswers = [...new Set(arr)];
-  const count =(arr.answers.filter((el) => el === req.params.answer).length * 100) / arr.answers.length;
+  const count =
+    (arr.answers.filter((el) => el === req.params.answer).length * 100) /
+    arr.answers.length;
   //   const count = uniqueAnswers.map((element) => [
   //     element,
   //     arr.filter((el) => el === element).length*100/arr.length,
   //   ]);
-  if(count<40) res.json({result:"You're answer is unique. Less people matches to your answer"});
-  else if(count<=40) res.json({result:"Many people think like you"});
-  else if(count<=100) res.json({result:"Everyone think like you"});
+  if (count < 40 && count >= 0)
+    res.json({
+      result: "You're answer is unique. Less people matches to your answer",
+      count,
+      category: "UNDER",
+    });
+  else if (count >= 40 && count <= 60)
+    res.json({
+      result: "Many people think like you",
+      count,
+      category: "LIKE OTHERS",
+    });
+  else if (count < 60 )
+    res.json({ result: "Almost Everyone think like you", count, category: "UPPER" });
+  else if (count == 100)
+    res.json({ result: "Everyone think like you", count, category: "UPPER" });
 });
 
 // export the router
