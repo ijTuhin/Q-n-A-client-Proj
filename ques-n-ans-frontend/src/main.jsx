@@ -6,12 +6,14 @@ import { CookiesProvider } from "react-cookie";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import ResultsPage from "./pages/ResultsPage.jsx";
+import ErrorHomePage from "./pages/ErrorHomePage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
     loader: () => fetch(`http://localhost:3001/question`),
+    errorElement: <ErrorHomePage/>,
   },
   {
     path: "/result",

@@ -4,12 +4,11 @@ import { IoMdReturnRight } from "react-icons/io";
 import QuesAnswer from "../components/QuesAnswer";
 import { Link, useLoaderData, useLocation } from "react-router-dom";
 import AvgResults from "../components/AvgResults";
-import { useCookies } from "react-cookie";
 function HomePage() {
   // const location = useLocation();
   // const { from } = location.state;
   let questions = useLoaderData();
-  questions = questions.map((q) => {
+  questions = questions?.map((q) => {
     return {
       ...q,
       myAnswer: null,
@@ -35,22 +34,22 @@ function HomePage() {
   const [ques, setQues] = useState(0);
   // if (from) setQues(ques + 1);
   const changeQuestion = () => {
-    if (ques + 1 == questions.length) setQues(0);
-    else if (ques + 1 < questions.length) setQues(ques + 1);
+    if (ques + 1 == questions?.length) setQues(0);
+    else if (ques + 1 < questions?.length) setQues(ques + 1);
   };
   return (
     <div className="bg-black text-gray-500 h-screen">
       {change ? (
         <AvgResults
           changeQuestion={changeQuestion}
-          ques={questions[ques]}
+          ques={questions && questions[ques]}
           change={setChange}
           answer={answer}
         />
       ) : (
         <QuesAnswer
           changeQuestion={changeQuestion}
-          ques={questions[ques]}
+          ques={questions && questions[ques]}
           change={setChange}
           answer={answer}
           getAnswer={setAnswer}

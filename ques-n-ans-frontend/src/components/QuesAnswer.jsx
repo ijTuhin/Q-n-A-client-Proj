@@ -11,27 +11,27 @@ export default function QuesAnswer({
   const addAnswerToQuestion = () => {
     let questions = JSON.parse(localStorage.getItem("questions"));
     questions = questions.map((q) => {
-      if (q._id == ques._id) {
+      if (q?._id == ques?._id) {
         // let ans = q.myAnswer.push(answer.answer)
         return {
           ...q,
-          myAnswer: answer.answer
+          myAnswer: answer?.answer
         }
       }
       else return q
     });
     localStorage.setItem('questions', JSON.stringify(questions))
-    console.log("NEW ", answer.answer, questions)
+    console.log("NEW ", answer?.answer, questions)
   };
   const uploadAnswer = () => {
     addAnswerToQuestion()
-    fetch(`http://localhost:3001/question/${ques._id}`, {
+    fetch(`http://localhost:3001/question/${ques?._id}`, {
       method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        answer: answer.answer,
+        answer: answer?.answer,
       }),
     })
       .then((response) => response.json())
@@ -45,12 +45,12 @@ export default function QuesAnswer({
     <div className="flex justify-center">
       <section className="mt-52 space-y-3.5 flex flex-col items-center">
         <p className="text-center text-sm">Answer the Question</p>
-        <p className="text-gray-300 text-xl text-center"> {ques.question}</p>
+        <p className="text-gray-300 text-xl text-center"> {ques?.question}</p>
         <form className="w-[20rem] flex justify-center items-end gap-x-3">
           <input
             onChange={(e) => {
               getAnswer({
-                id: ques._id,
+                id: ques?._id,
                 answer: e.target.value,
               });
             }}
@@ -60,7 +60,7 @@ export default function QuesAnswer({
             name=""
             id=""
           />
-          {answer.answer ? (
+          {answer?.answer ? (
             <button
               type="button"
               onClick={() => {

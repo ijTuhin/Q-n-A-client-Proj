@@ -4,7 +4,7 @@ import { BsSend } from "react-icons/bs";
 export default function AvgResults({ changeQuestion, answer, change }) {
   const [result, setResult] = useState({});
   useEffect(() => {
-    fetch(`http://localhost:3001/question/${answer.answer}/${answer.id}`, {
+    fetch(`http://localhost:3001/question/${answer?.answer}/${answer?.id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -20,8 +20,8 @@ export default function AvgResults({ changeQuestion, answer, change }) {
   return (
     <div className="flex justify-center">
       <section className="mt-52 space-y-5 flex flex-col items-center">
-        <p className="text-gray-300 text-4xl text-center mb-5"> {Math.ceil(result.count)}%</p>
-        <p className="text-center text-lg">{result.result}</p>
+        <p className="text-gray-300 text-4xl text-center mb-5"> {Math.ceil(result?.count)}%</p>
+        <p className="text-center text-lg">{result?.result}</p>
         <button
           type="button"
           onClick={() => {
