@@ -6,8 +6,8 @@ import { Link, useLoaderData, useLocation } from "react-router-dom";
 import AvgResults from "../components/AvgResults";
 import { useCookies } from "react-cookie";
 function HomePage() {
-  const location = useLocation();
-  const { from } = location.state;
+  // const location = useLocation();
+  // const { from } = location.state;
   let questions = useLoaderData();
   questions = questions.map((q) => {
     return {
@@ -33,7 +33,7 @@ function HomePage() {
   console.log(questions);
   const [change, setChange] = useState(0);
   const [ques, setQues] = useState(0);
-  if (from) setQues(ques + 1);
+  // if (from) setQues(ques + 1);
   const changeQuestion = () => {
     if (ques + 1 == questions.length) setQues(0);
     else if (ques + 1 < questions.length) setQues(ques + 1);
